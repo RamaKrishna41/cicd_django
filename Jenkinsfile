@@ -10,6 +10,7 @@ stage('Building our image') {
 steps{
 echo "${BUILD_NUMBER}"
 echo "${VERSION}"
+sh 'docker-compose up --build'
 sh 'docker cp django-container:/usr/src/app/database/db.sqlite3 ./'
 sh "docker build -t django_test ."
 sh "docker images"
