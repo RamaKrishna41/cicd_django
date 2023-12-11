@@ -1,5 +1,6 @@
 #!groovy
 pipeline {
+agent any
 environment {
 REGISTRY = "ramakrishna41/django_test"
 VERSION = "${env.BUILD_ID}-${env.GIT_COMMIT}"
@@ -12,8 +13,6 @@ stage('Building our image') {
 steps{
 echo "${BUILD_NUMBER}"
 echo "${VERSION}"
-withCredentials([usernamePassword(credentialsId: 'dockerhub', usernameVariable: 'DOCKER_USERNAME', passwordVariable: 'DOCKER_PASSWORD')]) {
-    sh "sudo docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD"
 sh "sudo docker build -t django_test ."
 sh "sudo docker tag django_test:latest ${RESISTRY}:${VERSION}"
 sh "sudo docker push ${RESISTRY}:${VERSION}"
