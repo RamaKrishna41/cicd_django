@@ -1,11 +1,6 @@
 version: '3'
+
 services:
-  db:
-    image: ramakrishna41/sqlite3:latest
-    volumes:
-      - ./database:/usr/src/app/database
-    environment:
-      - SQLITE3_DB=db.sqlite3
   web:
     build:
       context: .
@@ -13,6 +8,7 @@ services:
     ports:
       - "8000:8000"
     volumes:
-      - .:/usr/src/app
-    depends-on:
-      - db
+      - db-data:/usr/src/app/database
+
+volumes:
+  db-data:
