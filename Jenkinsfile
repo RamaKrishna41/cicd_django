@@ -2,7 +2,7 @@ pipeline {
 environment {
 REGISTRY = "ramakrishna41/django_test"
 VERSION = "${env.BUILD_ID}-${env.GIT_COMMIT}"
-registryCredential = 'ramakrishna41'
+registryCredential = 'dockerhub'
 dockerImage = ''
 }
 agent any
