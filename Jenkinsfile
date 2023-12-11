@@ -11,7 +11,7 @@ stage('Building our image') {
 steps{
 echo "${BUILD_NUMBER}"
 echo "${VERSION}"
-withCredentials([usernamePassword(credentialsId: 'dockerhub', usernameVariable: 'DOCKER_USERNAME', passwordVariable: 'DOCKER_PASSWORD')]) {
+withCredentials([usernamePassword(credentialsId: 'github-jenkins', usernameVariable: 'DOCKER_USERNAME', passwordVariable: 'DOCKER_PASSWORD')]) {
     sh 'docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD'
 }
 sh "docker build -t django_test ."
