@@ -14,11 +14,9 @@ sh "git clone https://github.com/RamaKrishna41/Django_Test.git"
 }
 stage('Building our image') {
 steps{
-script {
 echo ${BUILD_NUMBER}
 withCredentials([usernamePassword(credentialsId: 'dockerhub', usernameVariable: 'DOCKER_USERNAME', passwordVariable: 'DOCKER_PASSWORD')]) {
     sh "sudo docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD"
-}
 sh "sudo docker build -t django_test ."
 sh "sudo docker tag django_test:latest ${RESISTRY}:${VERSION}"
 sh "sudo docker push ${RESISTRY}:${VERSION}"
