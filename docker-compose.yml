@@ -8,7 +8,9 @@ services:
     ports:
       - "8000:8000"
     volumes:
-      - db-data:/usr/src/app/database
+      - ./:/usr/src/app/database
+    depends-on:
+      image: db
 
 volumes:
-  db-data:
+  ./:

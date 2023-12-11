@@ -10,6 +10,7 @@ stage('Building our image') {
 steps{
 echo "${BUILD_NUMBER}"
 echo "${VERSION}"
+sh 'docker cp django-container:/usr/src/app/database/db.sqlite3 ./'
 sh "docker build -t django_test ."
 sh "docker images"
 sh 'docker tag django_test:latest ${REGISTRY}:${VERSION}'
@@ -22,8 +23,9 @@ echo "Build Successfull"
 }
 stage('Deploy') {
     steps {
+        sh 'docker rm -f django-container'
         sh 'docker pull ${REGISTRY}:${VERSION}'
-        sh 'docker run -d -p 8000:8000 ${REGISTRY}:${VERSION}'
+        sh 'docker run -d -p 8000:8000 --nae django-container ${REGISTRY}:${VERSION}'
         sh "docker rmi -f django_test:latest"
     }
 }
