@@ -19,7 +19,6 @@ sh "sudo docker push ${RESISTRY}:${VERSION}"
 echo "Build Successfull"
 }
 }
-}
 stage('Deploy') {
     steps {
         sh "sudo docker pull ${RESISTRY}:${VERSION}"
