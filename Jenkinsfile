@@ -1,7 +1,8 @@
 pipeline {
 environment {
-registry = "ramakrishna41/django_test"
-registryCredential = 'ramakrishna41'
+REGISTRY = "ramakrishna41/django_test"
+VERSION = "${env.BUILD_ID}-${env.GIT_COMMIT}"
+registryCredential = 'dockerhub'
 dockerImage = ''
 }
 agent any
@@ -14,22 +15,11 @@ git 'https://github.com/RamaKrishna41/Django_Test.git'
 stage('Building our image') {
 steps{
 script {
-dockerImage = docker.build registry + ":$BUILD_NUMBER"
+echo $BUILD_NUMBER
+sh "sudo docker build -t django_test ."
+sh "sudo docker tag django_test:latest ${RESISTRY}:${VERSION}"
+sh "sudo docker push ${RESISTRY}:${VERSION}"
 }
-}
-}
-stage('Deploy our image') {
-steps{
-script {
-docker.withRegistry( '', registryCredential ) {
-dockerImage.push()
-}
-}
-}
-}
-stage('Cleaning up') {
-steps{
-sh "docker rmi $registry:$BUILD_NUMBER"
 }
 }
 }
