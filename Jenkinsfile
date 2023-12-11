@@ -11,7 +11,9 @@ stage('Building our image') {
 steps{
 echo "${BUILD_NUMBER}"
 echo "${VERSION}"
-sh "sudo su - jenkins"
+withCredentials([usernamePassword(credentialsId: 'dockerhub', usernameVariable: 'DOCKER_USERNAME', passwordVariable: 'DOCKER_PASSWORD')]) {
+    sh 'docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD'
+}
 sh "docker build -t django_test ."
 sh "docker tag django_test:latest ${RESISTRY}:${VERSION}"
 sh "docker push ${RESISTRY}:${VERSION}"
