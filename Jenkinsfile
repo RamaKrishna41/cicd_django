@@ -17,15 +17,15 @@ sh "docker images"
     withCredentials([usernamePassword(credentialsId: 'dockerhub', usernameVariable: 'DOCKER_USERNAME', passwordVariable: 'DOCKER_PASSWORD')]) {
     sh 'sudo docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD'
     }
-sh "docker tag django_test:latest ${RESISTRY}:${VERSION}"
-sh "docker push ${RESISTRY}:${VERSION}"
+sh 'docker tag django_test:latest ${RESISTRY}:${VERSION}'
+sh 'docker push ${RESISTRY}:${VERSION}'
 echo "Build Successfull"
 }
 }
 stage('Deploy') {
     steps {
-        sh "docker pull ${RESISTRY}:${VERSION}"
-        sh "docker run -d -p 8000:8000 ${RESISTRY}:${VERSION}"
+        sh 'docker pull ${RESISTRY}:${VERSION}'
+        sh 'docker run -d -p 8000:8000 ${RESISTRY}:${VERSION}'
     }
 }
 }
