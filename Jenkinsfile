@@ -11,9 +11,11 @@ stage('Building our image') {
 steps{
 echo "${BUILD_NUMBER}"
 echo "${VERSION}"
+sh "docker rmi -f django_test:latest"
 sh "docker build -t django_test ."
-    withCredentials([string(credentialsId: 'DOCKER_PASSWORD', variable: 'DOCKER_PASSWORD')]) {
-        sh 'sudo docker login -u {ramakrishna41} -p ${DOCKER_PASSWORD}'
+sh "docker images"
+    withCredentials([usernamePassword(credentialsId: 'dockerhub', usernameVariable: 'DOCKER_USERNAME', passwordVariable: 'DOCKER_PASSWORD')]) {
+    sh 'sudo docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD'
     }
 sh "docker tag django_test:latest ${RESISTRY}:${VERSION}"
 sh "docker push ${RESISTRY}:${VERSION}"
