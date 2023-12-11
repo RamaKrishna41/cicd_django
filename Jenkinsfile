@@ -7,7 +7,6 @@ VERSION = "${env.BUILD_ID}-${env.GIT_COMMIT}"
 registryCredential = 'dockerhub'
 dockerImage = ''
 }
-agent any
 stages {
 stage('Building our image') {
 steps{
