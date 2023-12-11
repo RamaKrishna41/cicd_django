@@ -1,5 +1,4 @@
 version: '3'
-
 services:
   db:
     image: ramakrishna41/sqlite3:latest
