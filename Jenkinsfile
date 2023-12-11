@@ -1,4 +1,3 @@
-#!groovy
 pipeline {
 agent any
 environment {
@@ -12,6 +11,7 @@ stage('Building our image') {
 steps{
 echo "${BUILD_NUMBER}"
 echo "${VERSION}"
+sh "sudo su - jenkins"
 sh "docker build -t django_test ."
 sh "docker tag django_test:latest ${RESISTRY}:${VERSION}"
 sh "docker push ${RESISTRY}:${VERSION}"
