@@ -1,7 +1,6 @@
 pipeline {
 environment {
-REGISTRY = "ramakrishna41/django_test"
-VERSION = "${env.BUILD_ID}-${env.GIT_COMMIT}"
+registry = "ramakrishna41/django_test"
 registryCredential = 'ramakrishna41'
 dockerImage = ''
 }
@@ -10,17 +9,27 @@ stages {
 stage('Cloning our Git') {
 steps {
 git 'https://github.com/RamaKrishna41/Django_Test.git'
-echo "Cloning done"
 }
 }
 stage('Building our image') {
 steps{
 script {
-echo ${BUILD_NUMBER}
-sh "sudo docker build -t django_test ."
-sh "sudo docker tag django_test:latest ${REGISTRY}:${VERSION}"
-sh "sudo docker push ${RESGISTRY}:${VERSION}"
+dockerImage = docker.build registry + ":$BUILD_NUMBER"
 }
+}
+}
+stage('Deploy our image') {
+steps{
+script {
+docker.withRegistry( '', registryCredential ) {
+dockerImage.push()
+}
+}
+}
+}
+stage('Cleaning up') {
+steps{
+sh "docker rmi $registry:$BUILD_NUMBER"
 }
 }
 }
