@@ -7,11 +7,6 @@ dockerImage = ''
 }
 agent any
 stages {
-stage('Cloning our Git') {
-steps {
-sh "git clone https://github.com/RamaKrishna41/Django_Test.git"
-}
-}
 stage('Building our image') {
 steps{
 echo "${BUILD_NUMBER}"
