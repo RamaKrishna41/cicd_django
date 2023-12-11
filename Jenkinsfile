@@ -16,16 +16,16 @@ sh "docker build -t django_test ."
 sh "docker images"
 sh 'docker tag django_test:latest ${REGISTRY}:${VERSION}'
     withCredentials([usernamePassword(credentialsId: 'dockerhub', usernameVariable: 'DOCKER_USERNAME', passwordVariable: 'DOCKER_PASSWORD')]) {
-    sh 'sudo docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD docker.io'
-    sh 'sudo docker push ${REGISTRY}:${VERSION}'
+    sh 'docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD docker.io'
+    sh 'docker push ${REGISTRY}:${VERSION}'
     }
 echo "Build Successfull"
 }
 }
 stage('Deploy') {
     steps {
-        sh 'docker pull ${RESISTRY}:${VERSION}'
-        sh 'docker run -d -p 8000:8000 ${RESISTRY}:${VERSION}'
+        sh 'docker pull ${REGISTRY}:${VERSION}'
+        sh 'docker run -d -p 8000:8000 ${REGISTRY}:${VERSION}'
     }
 }
 }
