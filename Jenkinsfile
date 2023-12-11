@@ -9,7 +9,7 @@ agent any
 stages {
 stage('Cloning our Git') {
 steps {
-git 'https://github.com/RamaKrishna41/Django_Test.git'
+sh "git clone https://github.com/RamaKrishna41/Django_Test.git"
 }
 }
 stage('Building our image') {
