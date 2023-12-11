@@ -10,15 +10,16 @@ stages {
 stage('Cloning our Git') {
 steps {
 git 'https://github.com/RamaKrishna41/Django_Test.git'
+echo "Cloning done"
 }
 }
 stage('Building our image') {
 steps{
 script {
-echo $BUILD_NUMBER
+echo ${BUILD_NUMBER}
 sh "sudo docker build -t django_test ."
-sh "sudo docker tag django_test:latest ${RESISTRY}:${VERSION}"
-sh "sudo docker push ${RESISTRY}:${VERSION}"
+sh "sudo docker tag django_test:latest ${REGISTRY}:${VERSION}"
+sh "sudo docker push ${RESGISTRY}:${VERSION}"
 }
 }
 }
