@@ -11,7 +11,6 @@ stage('Building our image') {
 steps{
 echo "${BUILD_NUMBER}"
 echo "${VERSION}"
-sh "sudo su - jenkins"
 sh "docker build -t django_test ."
     withCredentials([string(credentialsId: 'DOCKER_PASSWORD', variable: 'DOCKER_PASSWORD')]) {
         sh 'sudo docker login -u {ramakrishna41} -p ${DOCKER_PASSWORD}'
