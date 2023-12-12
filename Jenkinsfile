@@ -7,7 +7,7 @@ pipeline {
     stages {
         stage('Database Update') {
             steps {
-                sh 'docker cp django-container:/usr/src/app/database/db.sqlite3 ./database' || true
+                sh 'docker cp django-container:/usr/src/app/database/db.sqlite3 ./database || true'
             }
         }
         stage('Building image') {
