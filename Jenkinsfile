@@ -26,7 +26,7 @@ pipeline {
                 sh "docker rmi -f django_test:latest"
             }
         }
-        stage('Deploy staging') {
+        stage('Deploy') {
             steps {
                 sh 'docker pull ${REGISTRY}:${VERSION}'
                 sh 'docker run -d -p 8000:8000 --name django-container ${REGISTRY}:${VERSION}'
