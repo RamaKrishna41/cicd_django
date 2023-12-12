@@ -1,2 +1,1 @@
-# Django_Test
-This is to practice DevOps deployment
+This is used to deploy Django Blog application in AWS EC2 instance
