@@ -1,7 +1,7 @@
 pipeline {
     agent any
     environment {
-        REGISTRY = "ramakrishna41/django_test"
+        REGISTRY = "ramakrishna41/cicd_django"
         VERSION = "${env.BUILD_ID}"
     }
     stages {
@@ -12,8 +12,8 @@ pipeline {
         }
         stage('Building image') {
             steps{
-                sh "docker build -t django_test ."
-                sh 'docker tag django_test:latest ${REGISTRY}:${VERSION}'
+                sh "docker build -t cicd_django ."
+                sh 'docker tag cicd_django:latest ${REGISTRY}:${VERSION}'
                 withCredentials([usernamePassword(credentialsId: 'dockerhub', usernameVariable: 'DOCKER_USERNAME', passwordVariable: 'DOCKER_PASSWORD')]) {
                     sh 'docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD docker.io'
                     sh 'docker push ${REGISTRY}:${VERSION}'
@@ -23,7 +23,7 @@ pipeline {
         stage('Removing the old container'){
             steps {
                 sh 'docker rm -f django-container'
-                sh "docker rmi -f django_test:latest"
+                sh "docker rmi -f cicd_django:latest"
                 sh 'docker images'
                 sh 'docker ps'
             }
