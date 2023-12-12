@@ -24,7 +24,6 @@ pipeline {
             steps {
                 sh 'docker rm -f django-container'
                 sh "docker rmi -f cicd_django:latest"
-                sh "docker rmi -f ${REGISTRY}:${VERSION}"
                 sh 'docker images'
                 sh 'docker ps'
             }

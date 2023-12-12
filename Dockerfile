@@ -1,9 +1,7 @@
 FROM python:3.12
 
 RUN apt-get update \
-        && apt-get install -y --no-install-recommends \
-                postgresql-client \
-        && rm -rf /var/lib/apt/lists/*
+ && apt-get install -y --no-install-recommends
 
 WORKDIR /app
 COPY requirements.txt ./
@@ -14,5 +12,5 @@ COPY . /app/
 EXPOSE 8000
 
 RUN python3 manage.py makemigrations \
-        && python3 manage.py migrate
+ && python3 manage.py migrate
 CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]
