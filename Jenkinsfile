@@ -5,6 +5,13 @@ pipeline {
         VERSION = "${env.BUILD_ID}"
     }
     stages {
+        stage('Database Update') {
+            steps {
+                set +e
+                sh 'docker cp django-container:/usr/src/app/database/db.sqlite3 ./database'
+                set -e
+            }
+        }
         stage('Building image') {
             steps{
                 sh "docker build -t cicd_django ."
