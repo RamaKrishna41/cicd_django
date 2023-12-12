@@ -5,11 +5,11 @@ RUN apt-get update \
                 postgresql-client \
         && rm -rf /var/lib/apt/lists/*
 
-WORKDIR /usr/src/app
+WORKDIR /app
 COPY requirements.txt ./
 RUN pip install --upgrade pip
 RUN pip install -r requirements.txt
-COPY . /usr/src/app/
+COPY . /app/
 
 EXPOSE 8000
 
