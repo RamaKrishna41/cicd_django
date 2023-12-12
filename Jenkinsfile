@@ -24,12 +24,15 @@ pipeline {
             steps {
                 sh 'docker rm -f django-container'
                 sh "docker rmi -f django_test:latest"
+                sh 'docker images'
+                sh 'docker ps'
             }
         }
         stage('Deploy') {
             steps {
                 sh 'docker pull ${REGISTRY}:${VERSION}'
                 sh 'docker run -d -p 8000:8000 --name django-container ${REGISTRY}:${VERSION}'
+                sh 'docker ps'
             }
         }
         
